@@ -2,10 +2,19 @@
 
 # 更新软件包列表并安装 zsh 和 neovim
 sudo apt-get update
-sudo apt-get install -y zsh neovim
+sudo apt-get install -y zsh 
 
-# 克隆 nvimdots 仓库到当前目录
-git clone git@github.com:lar0129/nvimdots.git
+wget https://github.com/neovim/neovim/releases/download/v0.9.5/nvim-linux64.tar.gz
+tar xzvf nvim-linux64.tar.gz
+rm -rf nvim-linux64.tar.gz
+ln -s ~/nvim-linux64/bin/nvim /usr/bin/nvim
+
+# 安装 nvimdots 仓库到当前目录
+if command -v curl >/dev/null 2>&1; then
+    bash -c "$(curl -fsSL https://raw.githubusercontent.com/ayamir/nvimdots/HEAD/scripts/install.sh)"
+else
+    bash -c "$(wget -O- https://raw.githubusercontent.com/ayamir/nvimdots/HEAD/scripts/install.sh)"
+fi
 
 # 获取当前目录
 CURRENT_DIR="$(pwd)"
@@ -28,9 +37,14 @@ create_symlink() {
 
 # 为 .zshrc 创建符号链接
 create_symlink "$CURRENT_DIR/.zshrc" "$HOME/.zshrc"
+source ~/.zshrc
 
 # 确保 ~/.config/nvim 目录存在
 mkdir -p "$HOME/.config/nvim"
 
 # 为 init.lua 创建符号链接
 create_symlink "$CURRENT_DIR/nvim/init.lua" "$HOME/.config/nvim/init.lua"
+
+#切换shell,安装ohmyzsh
+sh -c "$(curl -fsSL https://install.ohmyz.sh/)"
+

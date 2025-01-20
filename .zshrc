@@ -32,7 +32,6 @@ alias 666='echo'
 alias gcc='gcc-14'
 alias g++='g++-14'
 
-export JAVA_HOME="$(/usr/libexec/java_home)"
 alias python='python3'
 alias pip='pip3'
 
