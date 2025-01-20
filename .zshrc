@@ -1,6 +1,5 @@
-
+export PATH="/Applications/Docker.app/Contents/Resources/bin:$PATH"
 export DYLD_LIBRARY_PATH="/usr/local/opt/mbedtls/lib:$DYLD_LIBRARY_PATH"
-alias hdc='/Users/lianganran/Library/OpenHarmony/Sdk/13/toolchains/hdc'
 
 export DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib:$DYLD_FALLBACK_LIBRARY_PATH
 
@@ -24,11 +23,12 @@ proxy_on()
 
 export PATH="/opt/homebrew/anaconda3/bin:$PATH"
 
+alias hdc='/Users/lianganran/Library/OpenHarmony/Sdk/13/toolchains/hdc'
+alias ll='ls -alh'
+alias v='nvim'
 alias 666='echo'
-
 # alias proxy='export all_proxy=socks5://127.0.0.1:7890'
 # alias unproxy='unset all_proxy'
-
 alias gcc='gcc-14'
 alias g++='g++-14'
 
