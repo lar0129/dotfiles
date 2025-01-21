@@ -5,17 +5,17 @@ CURRENT_DIR="$(pwd)"
 
 # 更新软件包列表并安装 zsh 和 neovim
 sudo apt-get update
-sudo apt-get install -y zsh 
+sudo apt-get install -y zsh
 
-wget https://github.com/neovim/neovim/releases/download/v0.9.5/nvim-linux64.tar.gz
+wget -P /home https://github.com/neovim/neovim/releases/download/v0.9.5/nvim-linux64.tar.gz
 tar -xzvf nvim-linux64.tar.gz
-ln -s $CURRENT_DIR/nvim-linux64/bin/nvim /usr/bin/nvim
+ln -s /home/nvim-linux64/bin/nvim /usr/bin/nvim
 
 # 安装 nvimdots 仓库到当前目录
 if command -v curl >/dev/null 2>&1; then
-    bash -c "$(curl -fsSL https://raw.githubusercontent.com/ayamir/nvimdots/HEAD/scripts/install.sh)"
+	bash -c "$(curl -fsSL https://raw.githubusercontent.com/ayamir/nvimdots/HEAD/scripts/install.sh)"
 else
-    bash -c "$(wget -O- https://raw.githubusercontent.com/ayamir/nvimdots/HEAD/scripts/install.sh)"
+	bash -c "$(wget -O- https://raw.githubusercontent.com/ayamir/nvimdots/HEAD/scripts/install.sh)"
 fi
 
 # 定义创建符号链接的函数
@@ -46,4 +46,3 @@ create_symlink "$CURRENT_DIR/nvim/init.lua" "$HOME/.config/nvim/init.lua"
 
 #切换shell,安装ohmyzsh
 sh -c "$(curl -fsSL https://install.ohmyz.sh/)"
-
