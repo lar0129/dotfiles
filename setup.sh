@@ -1,13 +1,15 @@
 #!/bin/bash
 
+# 获取当前目录
+CURRENT_DIR="$(pwd)"
+
 # 更新软件包列表并安装 zsh 和 neovim
 sudo apt-get update
 sudo apt-get install -y zsh 
 
 wget https://github.com/neovim/neovim/releases/download/v0.9.5/nvim-linux64.tar.gz
-tar xzvf nvim-linux64.tar.gz
-rm -rf nvim-linux64.tar.gz
-ln -s ~/nvim-linux64/bin/nvim /usr/bin/nvim
+tar -xzvf nvim-linux64.tar.gz
+ln -s $CURRENT_DIR/nvim-linux64/bin/nvim /usr/bin/nvim
 
 # 安装 nvimdots 仓库到当前目录
 if command -v curl >/dev/null 2>&1; then
@@ -15,9 +17,6 @@ if command -v curl >/dev/null 2>&1; then
 else
     bash -c "$(wget -O- https://raw.githubusercontent.com/ayamir/nvimdots/HEAD/scripts/install.sh)"
 fi
-
-# 获取当前目录
-CURRENT_DIR="$(pwd)"
 
 # 定义创建符号链接的函数
 create_symlink() {
