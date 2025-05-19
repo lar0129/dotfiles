@@ -5,7 +5,7 @@ CURRENT_DIR="$(pwd)"
 
 # 更新软件包列表并安装 zsh 和 neovim
 sudo apt-get update
-sudo apt-get install -y zsh
+sudo apt-get install -y zsh autojump
 
 wget -P /home https://github.com/neovim/neovim/releases/download/v0.9.5/nvim-linux64.tar.gz
 tar -xzvf nvim-linux64.tar.gz
@@ -47,5 +47,5 @@ create_symlink "$CURRENT_DIR/nvim/init.lua" "$HOME/.config/nvim/init.lua"
 #切换shell,安装ohmyzsh
 sh -c "$(curl -fsSL https://install.ohmyz.sh/)"
 
-git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+git clone git@github.com:zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+git clone git@github.com:zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
