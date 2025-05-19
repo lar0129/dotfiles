@@ -46,3 +46,6 @@ create_symlink "$CURRENT_DIR/nvim/init.lua" "$HOME/.config/nvim/init.lua"
 
 #切换shell,安装ohmyzsh
 sh -c "$(curl -fsSL https://install.ohmyz.sh/)"
+
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
