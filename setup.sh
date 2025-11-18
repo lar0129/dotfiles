@@ -125,8 +125,13 @@ install_ohmyzsh_and_plugins() {
 # =================
 
 install_packages
-install_neovim
 
+install_ohmyzsh_and_plugins
+echo "Creating symlinks for zshrc..."
+create_symlink "$SCRIPT_DIR/.zshrc" "$HOME/.zshrc"
+
+
+install_neovim
 echo "Installing nvimdots..."
 if command -v curl >/dev/null 2>&1; then
     bash -c "$(curl -fsSL https://raw.githubusercontent.com/ayamir/nvimdots/HEAD/scripts/install.sh)"
@@ -134,12 +139,9 @@ else
     bash -c "$(wget -O- https://raw.githubusercontent.com/ayamir/nvimdots/HEAD/scripts/install.sh)"
 fi
 
-echo "Creating symlinks..."
+echo "Creating symlinks for nvim..."
 # Use $SCRIPT_DIR for correct pathing
-create_symlink "$SCRIPT_DIR/.zshrc" "$HOME/.zshrc"
 create_symlink "$SCRIPT_DIR/nvim/init.lua" "$HOME/.config/nvim/init.lua"
-
-install_ohmyzsh_and_plugins
 
 echo "✅ Dotfiles installation complete!"
 echo "Please restart your terminal or run 'zsh' to apply changes."
