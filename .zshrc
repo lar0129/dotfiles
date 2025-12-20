@@ -11,6 +11,12 @@ function proxy_on() {
     echo "代理已开启"
 }
 
+function ipads_proxy_on() {
+    export https_proxy="http://ipads:ipads123@202.120.40.82:11235"
+    export http_proxy="http://ipads:ipads123@202.120.40.82:11235"
+    echo "ipads代理已开启"
+}
+
 # 代理关闭函数
 function proxy_off() {
     unset https_proxy
