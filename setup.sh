@@ -39,20 +39,63 @@ install_packages() {
 
 # --- 4. FRIENDLIER Neovim Installation (Using Package Managers) ---
 install_neovim() {
+    # Check if nvim is installed
     if command -v nvim >/dev/null 2>&1; then
-        echo "✅ Neovim is already installed. Skipping."
-        return
+        # Check version
+        local current_ver
+        current_ver=$(nvim --version | head -n 1 | grep -oE 'v[0-9]+\.[0-9]+')
+        
+        # Check if version is 0.11 or higher (simple string check for now, can be improved)
+        # Matches v0.11, v0.12, etc.
+        if [[ "$current_ver" =~ v0\.(1[1-9]|[2-9][0-9]) ]]; then
+            echo "✅ Neovim $current_ver is already installed. Skipping."
+            return
+        fi
+        echo "⚠️  Old Neovim version detected ($current_ver). Upgrading to 0.11+..."
+    else
+        echo "🚀 Installing Neovim..."
     fi
-    
-    echo "🚀 Installing Neovim..."
 
     if [ "$OS_TYPE" = "Linux" ]; then
-        echo "➕ Adding Neovim stable PPA..."
-        # This PPA is the official recommended way for Ubuntu
-        sudo add-apt-repository ppa:neovim-ppa/stable -y
-        sudo apt-get update
-        echo "⬇️ Installing neovim via apt..."
-        sudo apt-get install -y neovim
+        echo "🧹 Removing any existing apt neovim..."
+        sudo apt-get remove -y neovim neovim-runtime
+
+        # Determine architecture
+        local nvim_arch=""
+        if [ "$OS_ARCH" = "x86_64" ]; then
+            nvim_arch="linux-x86_64"
+        elif [ "$OS_ARCH" = "aarch64" ]; then
+            nvim_arch="linux-arm64"
+        else
+            echo "❌ Error: Unsupported architecture for Neovim binary: $OS_ARCH"
+            exit 1
+        fi
+
+        echo "⬇️ Downloading Neovim latest release (0.11+)..."
+        local download_url="https://github.com/neovim/neovim/releases/latest/download/nvim-$nvim_arch.tar.gz"
+        
+        # Download to /tmp
+        if wget -O "/tmp/nvim.tar.gz" "$download_url"; then
+            echo "📦 Extracting to /opt/nvim..."
+            sudo rm -rf /opt/nvim
+            # Extract to /opt
+            sudo tar -C /opt -xzf "/tmp/nvim.tar.gz"
+            
+            # The tarball contains a directory like 'nvim-linux-x86_64'. We rename it to 'nvim' for simplicity
+            # or just symlink from it.
+            if [ -d "/opt/nvim-$nvim_arch" ]; then
+                sudo mv "/opt/nvim-$nvim_arch" /opt/nvim
+            fi
+            
+            # Create symlink
+            echo "🔗 Linking /usr/local/bin/nvim..."
+            sudo ln -sf /opt/nvim/bin/nvim /usr/local/bin/nvim
+            
+            rm "/tmp/nvim.tar.gz"
+        else
+            echo "❌ Error: Failed to download Neovim."
+            exit 1
+        fi
         
     elif [ "$OS_TYPE" = "Mac" ]; then
         echo "⬇️ Installing neovim via Homebrew..."
