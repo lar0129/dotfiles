@@ -1,5 +1,5 @@
-if not vim.g.vscode then
-	require("core")
-end
+-- if not vim.g.vscode then
+-- 	require("core")
+-- end
 
-vim.cmd('colorscheme darkblue')
+-- vim.cmd('colorscheme darkblue')

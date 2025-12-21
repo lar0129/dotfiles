@@ -25,12 +25,13 @@ function proxy_off() {
     echo "代理已关闭"
 }
 
-proxy_on()
+# proxy_on()
 
 export PATH="/opt/homebrew/anaconda3/bin:$PATH"
 
 alias hdc='/Users/lianganran/Library/OpenHarmony/Sdk/13/toolchains/hdc'
 alias ll='ls -alh'
+# alias j='autojump'
 alias v='nvim'
 alias 666='echo'
 # alias gcc='gcc-14'
@@ -41,6 +42,7 @@ alias pip='pip3'
 
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh 
 
+[ -f /usr/share/autojump/autojump.sh ] && . /usr/share/autojump/autojump.sh
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH

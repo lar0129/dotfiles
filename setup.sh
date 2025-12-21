@@ -141,6 +141,7 @@ fi
 
 echo "🔗 Creating symlinks for nvim..."
 # Use $SCRIPT_DIR for correct pathing
+mkdir -p "$HOME/.config/nvim"
 create_symlink "$SCRIPT_DIR/nvim/init.lua" "$HOME/.config/nvim/init.lua"
 
 echo "✅ Dotfiles installation complete!"
