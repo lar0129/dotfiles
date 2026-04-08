@@ -1,8 +1,3 @@
-export PATH="/Applications/Docker.app/Contents/Resources/bin:$PATH"
-export DYLD_LIBRARY_PATH="/usr/local/opt/mbedtls/lib:$DYLD_LIBRARY_PATH"
-
-export DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib:$DYLD_FALLBACK_LIBRARY_PATH
-
 # 代理开启函数
 function proxy_on() {
     export https_proxy="http://127.0.0.1:7890"
@@ -40,9 +35,9 @@ alias 666='echo'
 alias python='python3'
 alias pip='pip3'
 
-[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh 
+# [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh 
 
-[ -f /usr/share/autojump/autojump.sh ] && . /usr/share/autojump/autojump.sh
+# [ -f /usr/share/autojump/autojump.sh ] && . /usr/share/autojump/autojump.sh
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
@@ -153,19 +148,4 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/lar/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/lar/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/lar/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/home/lar/miniconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
 
