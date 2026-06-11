@@ -187,5 +187,26 @@ echo "🔗 Creating symlinks for nvim..."
 mkdir -p "$HOME/.config/nvim"
 create_symlink "$SCRIPT_DIR/nvim/init.lua" "$HOME/.config/nvim/init.lua"
 
+# --- 7. tmux + catppuccin 主题 ---
+echo "🖥️ Installing tmux and catppuccin theme..."
+if [ "$OS_TYPE" = "Linux" ]; then
+    sudo apt-get install -y tmux
+elif [ "$OS_TYPE" = "Mac" ]; then
+    brew install tmux
+fi
+
+mkdir -p "$HOME/.config/tmux"
+if [ -d "$HOME/.config/tmux/catppuccin" ]; then
+    echo "✅ catppuccin/tmux already exists. Updating tags."
+    git -C "$HOME/.config/tmux/catppuccin" fetch --tags
+else
+    git clone -b v2.1.3 --depth 1 https://github.com/catppuccin/tmux.git "$HOME/.config/tmux/catppuccin"
+fi
+
+echo "🔗 Creating symlink for tmux..."
+create_symlink "$SCRIPT_DIR/.tmux.conf" "$HOME/.tmux.conf"
+# 若有正在运行的 tmux,重新加载配置
+tmux info >/dev/null 2>&1 && tmux source-file "$HOME/.tmux.conf"
+
 echo "✅ Dotfiles installation complete!"
 echo "🔄 Please restart your terminal or run 'zsh' to apply changes."

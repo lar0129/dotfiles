@@ -1,4 +1,11 @@
-# 代理开启函数
+# ===================== 跨平台 zsh 配置 =====================
+# 机器专属配置放在 dotfiles/zsh/<机器名>.zsh,在本文件末尾按需加载。
+#   - macOS         : 自动识别($OSTYPE == darwin*)-> zsh/mac.zsh
+#   - Linux(多台) : 读 ~/.zsh_machine 文件内容(如 linux_a / linux_b)
+#                     -> zsh/linux_a.zsh 等。该文件不提交到 git,每台机器各放一份。
+# ===========================================================
+
+# ---- 代理开关(跨平台,各机器按需调用 proxy_on)----
 function proxy_on() {
     export https_proxy="http://127.0.0.1:7890"
     export http_proxy="http://127.0.0.1:7890"
@@ -12,7 +19,6 @@ function ipads_proxy_on() {
     echo "ipads代理已开启"
 }
 
-# 代理关闭函数
 function proxy_off() {
     unset https_proxy
     unset http_proxy
@@ -20,132 +26,49 @@ function proxy_off() {
     echo "代理已关闭"
 }
 
-# proxy_on()
-
-export PATH="/opt/homebrew/anaconda3/bin:$PATH"
-
-alias hdc='/Users/lianganran/Library/OpenHarmony/Sdk/13/toolchains/hdc'
+# ---- 通用 alias ----
 alias ll='ls -alh'
-# alias j='autojump'
 alias v='nvim'
 alias 666='echo'
-# alias gcc='gcc-14'
-# alias g++='g++-14'
-
 alias python='python3'
 alias pip='pip3'
 
-# [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh 
+# ---- 通用环境变量 ----
+export PATH="$HOME/.local/bin:$PATH"
+export HF_ENDPOINT=https://hf-mirror.com          # HuggingFace 国内镜像
+export TLDR_AUTO_UPDATE_DISABLED=1
 
-# [ -f /usr/share/autojump/autojump.sh ] && . /usr/share/autojump/autojump.sh
-
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
-
-# Path to your oh-my-zsh installation.
+# ---- oh-my-zsh ----
 export ZSH="$HOME/.oh-my-zsh"
-
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="robbyrussell"
-
-# Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in $ZSH/themes/
-# If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
-
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
-
-# Uncomment the following line to use hyphen-insensitive completion.
-# Case-sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
-
-# Uncomment one of the following lines to change the auto-update behavior
-# zstyle ':omz:update' mode disabled  # disable automatic updates
-# zstyle ':omz:update' mode auto      # update automatically without asking
-# zstyle ':omz:update' mode reminder  # just remind me to update when it's time
-
-# Uncomment the following line to change how often to auto-update (in days).
-# zstyle ':omz:update' frequency 13
-
-# Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS="true"
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# You can also set it to another string to have that shown instead of the default red dots.
-# e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
-# Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# You can set one of the optional three formats:
-# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# or set a custom format using the strftime function format specifications,
-# see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
-# Which plugins would you like to load?
-# Standard plugins can be found in $ZSH/plugins/
-# Custom plugins may be added to $ZSH_CUSTOM/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
+zstyle ':omz:update' mode disabled                # 关闭自动更新
 plugins=(
   git
   extract
   autojump
   zsh-autosuggestions
   zsh-syntax-highlighting
-	)
-
+)
 source $ZSH/oh-my-zsh.sh
 
-# User configuration
+# ===================== 加载机器专属配置 =====================
+# 解析 ~/.zshrc 软链接回 dotfiles 仓库目录(纯 zsh,跨平台)
+ZSH_DOTFILES="${${(%):-%x}:A:h}"
 
-# export MANPATH="/usr/local/man:$MANPATH"
+if [[ -z "$ZSH_MACHINE" ]]; then
+  if [[ "$OSTYPE" == darwin* ]]; then
+    ZSH_MACHINE=mac
+  elif [[ -r "$HOME/.zsh_machine" ]]; then
+    ZSH_MACHINE="${$(< "$HOME/.zsh_machine")//[[:space:]]/}"
+  fi
+fi
 
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-
-
-
+if [[ -n "$ZSH_MACHINE" ]]; then
+  if [[ -r "$ZSH_DOTFILES/zsh/$ZSH_MACHINE.zsh" ]]; then
+    source "$ZSH_DOTFILES/zsh/$ZSH_MACHINE.zsh"
+  else
+    echo "[zshrc] 未找到机器配置: $ZSH_DOTFILES/zsh/$ZSH_MACHINE.zsh" >&2
+  fi
+else
+  echo "[zshrc] 未识别机器类型,请创建 ~/.zsh_machine (内容如 linux_a)" >&2
+fi
