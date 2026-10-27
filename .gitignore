@@ -3,3 +3,9 @@
 nvim/*
 !nvim/init.vim
 
+# 机器标记和私密配置（即使误放进仓库也不提交）
+.zsh_machine
+.zshrc.local
+.zshrc.local.*
+!.zshrc.local.example
+zsh/*.local.zsh

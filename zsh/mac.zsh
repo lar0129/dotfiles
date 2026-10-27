@@ -14,8 +14,5 @@ export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
 # OpenHarmony hdc
 alias hdc="$HOME/Library/OpenHarmony/Sdk/13/toolchains/hdc"
 
-# autojump(Homebrew 安装路径)
-[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
-
 # 本机走本地 clash 代理,如需自动开启取消下一行注释
 # proxy_on

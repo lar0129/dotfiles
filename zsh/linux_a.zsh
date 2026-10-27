@@ -32,8 +32,5 @@ case ":$PATH:" in
   *) export PATH="$XDG_BIN_HOME:$PATH" ;;
 esac
 
-# autojump(系统包管理器安装路径)
-[ -f /usr/share/autojump/autojump.sh ] && . /usr/share/autojump/autojump.sh
-
 # 默认开启本地代理
 proxy_on

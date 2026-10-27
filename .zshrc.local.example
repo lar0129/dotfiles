@@ -1,0 +1,18 @@
+# 复制到 ~/.zshrc.local，并执行 chmod 600 ~/.zshrc.local。
+# 此文件在共享工具和机器配置之前加载；只填写本机变量，不提交真实凭据。
+
+# GitHub CLI / API 凭据
+# export GH_TOKEN='填写本机令牌'
+
+# IPADS HTTP 代理 URL，包含地址、端口和所需认证信息
+# export IPADS_PROXY_URL='http://用户名:密码@代理地址:端口'
+
+# 按需覆盖默认路径、镜像和本地代理地址
+# export BUN_INSTALL="$HOME/.bun"
+# export NVM_DIR="$HOME/.nvm"
+# export FZF_BASE="$HOME/.fzf"
+# export CLASHCTL_HOME="$HOME/clashctl"
+# export HF_ENDPOINT='https://huggingface.co'
+# export LOCAL_HTTP_PROXY='http://127.0.0.1:7890'
+# export LOCAL_SOCKS_PROXY='socks5h://127.0.0.1:7890'
+# export NO_PROXY='localhost,127.0.0.1,::1,.internal.example'
