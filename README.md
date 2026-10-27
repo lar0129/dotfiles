@@ -13,6 +13,9 @@ bash setup.sh --shell-only
 # 同时选择这台 PC 的机器配置
 bash setup.sh --shell-only --machine linux-lar-pc
 
+# 同时选择 ds03 的机器配置
+bash setup.sh --shell-only --machine linux-ds03
+
 # 完整安装，还包括原有 Neovim / nvimdots / tmux 配置
 bash setup.sh
 ```
@@ -45,7 +48,8 @@ bash setup.sh
 仓库路径通过 `~/.zshrc` 软链接解析，clone 在任意目录都可用。
 
 - **macOS**：自动选择 `zsh/mac.zsh`。
-- **Linux**：读取 `~/.zsh_machine`。`linux_a` 是 GPU/NVMe 机器，`linux-lar-pc` 是 lar PC。
+- **Linux**：读取 `~/.zsh_machine`。`linux_a` 是 GPU/NVMe 机器，`linux-lar-pc` 是 lar PC，`linux-ds03` 是 ds03。
+- **ds03**：保留 `/data2/lar` 缓存和临时目录、CUDA 12.4、本机工具路径及双 Tab 快捷键；设置私密变量 `IPADS_PROXY_URL` 后默认开启代理，并保留 `proxy on/off/status` 用法。
 - 原来的 `linux_b` 已更名为 `linux-lar-pc`；运行 setup 会迁移旧标记，shell 也兼容旧名称。
 - 没有机器标记时，Linux 只加载共享配置。临时覆盖可用 `ZSH_MACHINE=linux-lar-pc zsh`。
 
